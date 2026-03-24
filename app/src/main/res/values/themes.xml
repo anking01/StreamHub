@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme -->
+    <style name="Theme.StreamHub" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/primary_light</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/surface</item>
+        <item name="android:navigationBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- Bottom navigation -->
+        <item name="bottomNavigationStyle">@style/Widget.StreamHub.BottomNav</item>
+    </style>
+
+    <!-- Stream Activity theme — dark status bar for video viewing -->
+    <style name="Theme.StreamHub.Stream" parent="Theme.StreamHub">
+        <item name="android:statusBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- Bottom Navigation custom style -->
+    <style name="Widget.StreamHub.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconTint">@color/selector_nav_item</item>
+        <item name="itemTextColor">@color/selector_nav_item</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="android:background">@color/surface</item>
+        <item name="elevation">8dp</item>
+    </style>
+
+    <!-- Chip style -->
+    <style name="Widget.StreamHub.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">100dp</item>
+    </style>
+
+</resources>

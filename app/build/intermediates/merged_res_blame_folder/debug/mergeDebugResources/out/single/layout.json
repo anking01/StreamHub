@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/item_feed_card.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/item_feed_card.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/activity_stream.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/activity_stream.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/activity_main.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/fragment_discover.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/fragment_discover.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/fragment_bookmarks.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/fragment_bookmarks.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/item_feed_source.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/item_feed_source.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/fragment_settings.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/fragment_settings.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/item_skeleton_card.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/item_skeleton_card.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/dialog_add_feed.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/dialog_add_feed.xml"
+    },
+    {
+        "merged": "com.streamhub.app-mergeDebugResources-60:/layout/dialog_add_feed.xml",
+        "source": "com.streamhub.app-main-63:/layout/dialog_add_feed.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-mergeDebugResources-60:/layout/fragment_home.xml",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/fragment_home.xml"
+    }
+]

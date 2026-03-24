@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#0A0A0F</color>
+    <color name="surface">#13131A</color>
+    <color name="surface_variant">#1C1C26</color>
+    <color name="divider">#2A2A3A</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#8888AA</color>
+    <color name="text_hint">#555570</color>
+    <color name="shimmer_base">#1C1C26</color>
+    <color name="shimmer_highlight">#2A2A36</color>
+    <color name="primary_container">#2E2A6E</color>
+</resources>

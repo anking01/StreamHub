@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.streamhub.app-mergeDebugResources-59:/values-hdpi-v4/values-hdpi-v4.xml",
+            "map": [
+                {
+                    "source": "/home/ankush/.gradle/caches/8.13/transforms/7ba4df969e2a521aa3f8240bf241a65a/transformed/appcompat-1.6.1/res/values-hdpi-v4/values-hdpi-v4.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "13",
+                        "endOffsets": "327"
+                    }
+                }
+            ]
+        }
+    ]
+}

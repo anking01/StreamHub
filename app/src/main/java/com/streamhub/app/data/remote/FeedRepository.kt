@@ -1,0 +1,95 @@
+package com.streamhub.app.data.remote
+
+import android.util.Log
+import com.streamhub.app.data.local.BookmarkDao
+import com.streamhub.app.data.local.toEntity
+import com.streamhub.app.data.local.toDomain
+import com.streamhub.app.data.model.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+
+private const val TAG = "FeedRepository"
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FeedRepository – orchestrates network fetching + local DB
+// ─────────────────────────────────────────────────────────────────────────────
+
+class FeedRepository(
+    private val bookmarkDao: BookmarkDao,
+    private val appScope: CoroutineScope
+) {
+    private val parser = RssFeedParser()
+
+    // In-memory feed cache (clears on app restart)
+    private val _feedCache = MutableStateFlow<List<ContentItem>>(emptyList())
+    val feedCache: StateFlow<List<ContentItem>> = _feedCache.asStateFlow()
+
+    // ── Feed Fetching ─────────────────────────────────────────
+
+    suspend fun fetchAllFeeds(
+        feeds: List<FeedConfig>,
+        category: Category = Category.ALL
+    ): Result<List<ContentItem>> = withContext(Dispatchers.IO) {
+        try {
+            val activeFeeds = feeds.filter { it.isActive }
+                .let { list ->
+                    if (category == Category.ALL) list
+                    else list.filter { it.category == category }
+                }
+
+            // Fetch all feeds concurrently (limit 5 at once)
+            val results = activeFeeds
+                .chunked(5)
+                .flatMap { batch ->
+                    batch.map { config ->
+                        async { parser.parse(config) }
+                    }.awaitAll()
+                }
+                .flatten()
+                .distinctBy { it.sourceUrl }
+                .sortedByDescending { it.publishedAt }
+
+            // Mark bookmarked items
+            val bookmarkedIds = bookmarkDao.getAllBookmarkIds().first().toSet()
+            val marked = results.map { it.copy(isBookmarked = it.id in bookmarkedIds) }
+
+            _feedCache.value = marked
+            Result.success(marked)
+        } catch (e: Exception) {
+            Log.e(TAG, "fetchAllFeeds failed: ${e.message}", e)
+            Result.failure(e)
+        }
+    }
+
+    suspend fun searchFeed(query: String): List<ContentItem> {
+        val q = query.lowercase().trim()
+        return _feedCache.value.filter {
+            it.title.lowercase().contains(q) ||
+            it.description.lowercase().contains(q) ||
+            it.sourceName.lowercase().contains(q) ||
+            it.tags.any { tag -> tag.lowercase().contains(q) }
+        }
+    }
+
+    // ── Bookmark Operations ───────────────────────────────────
+
+    val bookmarks: Flow<List<ContentItem>> =
+        bookmarkDao.getAllBookmarks().map { entities ->
+            entities.map { it.toDomain() }
+        }
+
+    val bookmarkIds: Flow<Set<String>> =
+        bookmarkDao.getAllBookmarkIds().map { it.toSet() }
+
+    suspend fun toggleBookmark(item: ContentItem) {
+        if (bookmarkDao.isBookmarked(item.id)) {
+            bookmarkDao.deleteById(item.id)
+        } else {
+            bookmarkDao.insert(item.toEntity())
+        }
+    }
+
+    suspend fun isBookmarked(id: String) = bookmarkDao.isBookmarked(id)
+
+    suspend fun clearAllBookmarks() = bookmarkDao.deleteAll()
+}

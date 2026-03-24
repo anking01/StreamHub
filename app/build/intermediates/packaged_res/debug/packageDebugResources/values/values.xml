@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#F4F4F8</color>
+    <color name="black">#000000</color>
+    <color name="divider">#E0E0EA</color>
+    <color name="error">#FF3B30</color>
+    <color name="live_red">#FF3B30</color>
+    <color name="overlay_dark">#99000000</color>
+    <color name="primary">#6C63FF</color>
+    <color name="primary_container">#EAE9FF</color>
+    <color name="primary_dark">#4A44CC</color>
+    <color name="primary_light">#8B84FF</color>
+    <color name="rss_orange">#FF9500</color>
+    <color name="shimmer_base">#E8E8EE</color>
+    <color name="shimmer_highlight">#F8F8FC</color>
+    <color name="success">#34C759</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F0F0F5</color>
+    <color name="text_hint">#9090A8</color>
+    <color name="text_primary">#0A0A0F</color>
+    <color name="text_secondary">#555570</color>
+    <color name="transparent">#00000000</color>
+    <color name="twitch_purple">#9147FF</color>
+    <color name="warning">#FF9500</color>
+    <color name="white">#FFFFFF</color>
+    <color name="youtube_red">#FF0000</color>
+    <string name="action_bookmark">Bookmark</string>
+    <string name="action_search">Search</string>
+    <string name="action_share">Share</string>
+    <string name="add">Add</string>
+    <string name="add_feed">Add Feed Source</string>
+    <string name="app_description">Your content, all in one place</string>
+    <string name="app_name">StreamHub</string>
+    <string name="bookmark_added">Bookmarked!</string>
+    <string name="bookmark_removed">Bookmark removed</string>
+    <string name="cancel">Cancel</string>
+    <string name="clear_bookmarks">Clear All Bookmarks</string>
+    <string name="clear_bookmarks_confirm">This will remove all saved bookmarks. Continue?</string>
+    <string name="confirm">Confirm</string>
+    <string name="empty_feed_message">No content yet.\nPull down to refresh or add more feed sources in Settings.</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_invalid_url">Please enter a valid URL</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="feed_name_hint">Display Name</string>
+    <string name="feed_url_hint">Feed URL (RSS/Atom)</string>
+    <string name="load_failed">Failed to load content</string>
+    <string name="loading_feed">Loading your feed…</string>
+    <string name="nav_bookmarks">Saved</string>
+    <string name="nav_discover">Discover</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_settings">Settings</string>
+    <string name="open_in_browser">Open in Browser</string>
+    <string name="refresh_feed">Refresh</string>
+    <string name="remove">Remove</string>
+    <string name="remove_feed_confirm">Remove this feed source?</string>
+    <string name="retry">Retry</string>
+    <string name="settings_sources">Content Sources</string>
+    <string name="type_article">Article</string>
+    <string name="type_audio">Podcast</string>
+    <string name="type_live">Live</string>
+    <string name="type_video">Video</string>
+    <style name="Theme.StreamHub" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/primary_light</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/surface</item>
+        <item name="android:navigationBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        
+        <item name="bottomNavigationStyle">@style/Widget.StreamHub.BottomNav</item>
+    </style>
+    <style name="Theme.StreamHub.Stream" parent="Theme.StreamHub">
+        <item name="android:statusBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <style name="Widget.StreamHub.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconTint">@color/selector_nav_item</item>
+        <item name="itemTextColor">@color/selector_nav_item</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="android:background">@color/surface</item>
+        <item name="elevation">8dp</item>
+    </style>
+    <style name="Widget.StreamHub.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipCornerRadius">100dp</item>
+    </style>
+</resources>

@@ -1,0 +1,186 @@
+[
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/menu_menu_bottom_nav.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/menu/menu_bottom_nav.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_fragment_bookmarks.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/fragment_bookmarks.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/menu_menu_home.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/menu/menu_home.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_share.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_share.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_fragment_home.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/color_selector_nav_item.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/color/selector_nav_item.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_home.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_home.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_add.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_add.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_arrow_back.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_arrow_back.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_fragment_discover.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/fragment_discover.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_fragment_settings.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/fragment_settings.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_refresh.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_refresh.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_arrow_forward.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_arrow_forward.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_open_in_browser.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_open_in_browser.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_bg_skeleton_line.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/bg_skeleton_line.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/navigation_nav_graph.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/navigation/nav_graph.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_bg_duration_badge.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/bg_duration_badge.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_dialog_add_feed.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/dialog_add_feed.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_bg_type_pill.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/bg_type_pill.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_bookmark_outline.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_bookmark_outline.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_explore.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_explore.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.streamhub.app-debug-61:/layout_dialog_add_feed.xml.flat",
+        "source": "com.streamhub.app-main-63:/layout/dialog_add_feed.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_activity_main.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_placeholder.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_placeholder.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_item_feed_card.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/item_feed_card.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_delete.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_delete.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_bg_dot.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/bg_dot.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_search.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_search.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_activity_stream.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/activity_stream.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_bookmark_filled.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_bookmark_filled.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_item_skeleton_card.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/item_skeleton_card.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/layout_item_feed_source.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/layout/item_feed_source.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/drawable_ic_settings.xml.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/drawable/ic_settings.xml"
+    },
+    {
+        "merged": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-debug-61:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/home/ankush/.gradle/daemon/8.13/com.streamhub.app-main-63:/mipmap-xxxhdpi/ic_launcher.png"
+    }
+]

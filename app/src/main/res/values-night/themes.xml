@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.StreamHub" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">#8B84FF</item>
+        <item name="colorPrimaryVariant">#6C63FF</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSurface">#13131A</item>
+        <item name="android:colorBackground">#0A0A0F</item>
+        <item name="android:windowBackground">#0A0A0F</item>
+        <item name="android:statusBarColor">#13131A</item>
+        <item name="android:navigationBarColor">#13131A</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+    <style name="Theme.StreamHub.Stream" parent="Theme.StreamHub"/>
+</resources>

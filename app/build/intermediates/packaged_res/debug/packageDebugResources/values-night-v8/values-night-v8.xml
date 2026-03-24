@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#0A0A0F</color>
+    <color name="divider">#2A2A3A</color>
+    <color name="primary_container">#2E2A6E</color>
+    <color name="shimmer_base">#1C1C26</color>
+    <color name="shimmer_highlight">#2A2A36</color>
+    <color name="surface">#13131A</color>
+    <color name="surface_variant">#1C1C26</color>
+    <color name="text_hint">#555570</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#8888AA</color>
+    <style name="Theme.StreamHub" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">#8B84FF</item>
+        <item name="colorPrimaryVariant">#6C63FF</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSurface">#13131A</item>
+        <item name="android:colorBackground">#0A0A0F</item>
+        <item name="android:windowBackground">#0A0A0F</item>
+        <item name="android:statusBarColor">#13131A</item>
+        <item name="android:navigationBarColor">#13131A</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+    <style name="Theme.StreamHub.Stream" parent="Theme.StreamHub"/>
+</resources>
