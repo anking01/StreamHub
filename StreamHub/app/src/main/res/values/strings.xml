@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StreamHub</string>
+    <string name="app_description">Your content, all in one place</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_discover">Discover</string>
+    <string name="nav_bookmarks">Saved</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Feed -->
+    <string name="empty_feed_message">No content yet.\nPull down to refresh or add more feed sources in Settings.</string>
+    <string name="loading_feed">Loading your feed…</string>
+    <string name="refresh_feed">Refresh</string>
+
+    <!-- Bookmarks -->
+    <string name="bookmark_added">Bookmarked!</string>
+    <string name="bookmark_removed">Bookmark removed</string>
+    <string name="clear_bookmarks">Clear All Bookmarks</string>
+    <string name="clear_bookmarks_confirm">This will remove all saved bookmarks. Continue?</string>
+
+    <!-- Stream -->
+    <string name="open_in_browser">Open in Browser</string>
+    <string name="load_failed">Failed to load content</string>
+    <string name="retry">Retry</string>
+
+    <!-- Settings -->
+    <string name="settings_sources">Content Sources</string>
+    <string name="add_feed">Add Feed Source</string>
+    <string name="feed_name_hint">Display Name</string>
+    <string name="feed_url_hint">Feed URL (RSS/Atom)</string>
+    <string name="remove_feed_confirm">Remove this feed source?</string>
+
+    <!-- Actions -->
+    <string name="action_search">Search</string>
+    <string name="action_share">Share</string>
+    <string name="action_bookmark">Bookmark</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="remove">Remove</string>
+    <string name="add">Add</string>
+
+    <!-- Content types -->
+    <string name="type_video">Video</string>
+    <string name="type_live">Live</string>
+    <string name="type_article">Article</string>
+    <string name="type_audio">Podcast</string>
+
+    <!-- Errors -->
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_invalid_url">Please enter a valid URL</string>
+</resources>

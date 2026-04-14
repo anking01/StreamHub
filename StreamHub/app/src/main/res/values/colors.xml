@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Colors -->
+    <color name="primary">#6C63FF</color>
+    <color name="primary_dark">#4A44CC</color>
+    <color name="primary_light">#8B84FF</color>
+    <color name="primary_container">#EAE9FF</color>
+
+    <!-- Status Colors -->
+    <color name="live_red">#FF3B30</color>
+    <color name="success">#34C759</color>
+    <color name="warning">#FF9500</color>
+    <color name="error">#FF3B30</color>
+
+    <!-- Source Colors -->
+    <color name="youtube_red">#FF0000</color>
+    <color name="twitch_purple">#9147FF</color>
+    <color name="rss_orange">#FF9500</color>
+
+    <!-- Light Theme Backgrounds -->
+    <color name="background">#F4F4F8</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F0F0F5</color>
+    <color name="divider">#E0E0EA</color>
+
+    <!-- Light Theme Text -->
+    <color name="text_primary">#0A0A0F</color>
+    <color name="text_secondary">#555570</color>
+    <color name="text_hint">#9090A8</color>
+
+    <!-- Shimmer -->
+    <color name="shimmer_base">#E8E8EE</color>
+    <color name="shimmer_highlight">#F8F8FC</color>
+
+    <!-- Misc -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="overlay_dark">#99000000</color>
+</resources>

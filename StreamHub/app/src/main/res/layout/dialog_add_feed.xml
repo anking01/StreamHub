@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Display Name"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_marginBottom="12dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_feed_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:imeOptions="actionNext" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Feed URL (RSS/Atom)"
+        app:helperText="e.g. https://example.com/feed.xml"
+        app:helperTextEnabled="true"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_feed_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri"
+            android:imeOptions="actionDone"
+            android:autofillHints="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="💡 Preset feeds available in Settings"
+        android:textColor="@color/text_hint"
+        android:textSize="12sp"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

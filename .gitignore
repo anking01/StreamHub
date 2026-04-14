@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Local config (has API keys - NEVER commit)
+local.properties
+
+# Signing certificate
+*.p12
+*.jks
+*.keystore
+
+# IDE
+.idea/
+*.iml
+
+# Android Studio generated
+captures/
+.externalNativeBuild/
+.cxx/
+
+# OS
+.DS_Store
+Thumbs.db

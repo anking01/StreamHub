@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.ankush.streamhub.ui.home.HomeFragment"
+        android:label="Home" />
+
+    <fragment
+        android:id="@+id/discoverFragment"
+        android:name="com.ankush.streamhub.ui.discover.DiscoverFragment"
+        android:label="Discover" />
+
+    <fragment
+        android:id="@+id/bookmarksFragment"
+        android:name="com.ankush.streamhub.ui.bookmarks.BookmarksFragment"
+        android:label="Bookmarks" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.ankush.streamhub.ui.settings.SettingsFragment"
+        android:label="Settings" />
+
+</navigation>

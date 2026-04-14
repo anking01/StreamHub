@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/surface"
+        app:title="Settings"
+        app:titleTextColor="@color/text_primary" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="80dp">
+
+            <!-- Feed Sources section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CONTENT SOURCES"
+                android:textColor="@color/text_hint"
+                android:textSize="11sp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.1"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="8dp" />
+
+            <!-- Add Feed button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_feed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:text="+ Add Feed Source"
+                app:icon="@drawable/ic_add" />
+
+            <!-- Dynamic feed list inserted here -->
+            <LinearLayout
+                android:id="@+id/layout_feeds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!-- AI Summary section -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginVertical="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AI SUMMARY PROVIDER"
+                android:textColor="@color/text_hint"
+                android:textSize="11sp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.1"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp" />
+
+            <RadioGroup
+                android:id="@+id/rg_ai_provider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp">
+
+                <RadioButton
+                    android:id="@+id/rb_gemini"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✨ Gemini (built-in)"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginEnd="24dp" />
+
+                <RadioButton
+                    android:id="@+id/rb_groq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚡ Groq (fast + free)"
+                    android:textColor="@color/text_primary" />
+
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_groq_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="4dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Groq API Key"
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_groq_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/text_primary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_groq_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginBottom="8dp"
+                android:text="Save Key"
+                style="@style/Widget.Material3.Button.TonalButton" />
+
+            <!-- Data section -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginVertical="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DATA"
+                android:textColor="@color/text_hint"
+                android:textSize="11sp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.1"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_clear_bookmarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:text="Clear All Bookmarks"
+                android:textColor="@color/error"
+                app:strokeColor="@color/error"
+                app:icon="@drawable/ic_delete" />
+
+            <!-- About -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider"
+                android:layout_marginVertical="16dp" />
+
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_hint"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:padding="16dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
