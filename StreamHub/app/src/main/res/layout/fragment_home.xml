@@ -40,6 +40,25 @@
 
         </HorizontalScrollView>
 
+        <!-- Regional language sub-filter (shown only when REGIONAL category is selected) -->
+        <HorizontalScrollView
+            android:id="@+id/scroll_regional_filter"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:scrollbars="none"
+            android:paddingHorizontal="12dp"
+            android:visibility="gone"
+            android:background="@color/background">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_regional"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:singleSelection="true"
+                android:gravity="center_vertical" />
+
+        </HorizontalScrollView>
+
         <!-- Persistent search bar -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_search"

@@ -25,6 +25,17 @@ import com.ankush.streamhub.ui.stream.StreamActivity
 import com.ankush.streamhub.util.*
 import kotlinx.coroutines.launch
 
+// Language → BBC source name mapping for Regional sub-filter
+private val REGIONAL_LANGUAGES = linkedMapOf(
+    "All"      to null,
+    "हिंदी"   to "BBC Hindi",
+    "தமிழ்"   to "BBC Tamil",
+    "తెలుగు"  to "BBC Telugu",
+    "বাংলা"   to "BBC Bengali",
+    "मराठी"   to "BBC Marathi",
+    "ગુજરાતી" to "BBC Gujarati"
+)
+
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -37,6 +48,7 @@ class HomeFragment : Fragment() {
     private lateinit var feedAdapter: FeedAdapter
     private var isSearchMode = false
     private var currentSearchQuery = ""
+    private var selectedRegionalSource: String? = null  // null = show all regional
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -47,6 +59,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupCategoryChips()
+        setupRegionalChips()
         setupSwipeRefresh()
         setupSearch()
         observeData()
@@ -71,8 +84,28 @@ class HomeFragment : Fragment() {
                 text = "${cat.emoji} ${cat.label}"
                 isCheckable = true
                 isChecked = i == 0
-                setOnClickListener { viewModel.setCategory(cat) }
+                setOnClickListener {
+                    selectedRegionalSource = null
+                    binding.scrollRegionalFilter.showIf(cat == Category.REGIONAL)
+                    // Reset regional "All" chip
+                    (binding.chipGroupRegional.getChildAt(0) as? Chip)?.isChecked = true
+                    viewModel.setCategory(cat)
+                }
             }.also { binding.chipGroupCategory.addView(it) }
+        }
+    }
+
+    private fun setupRegionalChips() {
+        REGIONAL_LANGUAGES.entries.forEachIndexed { i, (label, sourceName) ->
+            Chip(requireContext()).apply {
+                text = label
+                isCheckable = true
+                isChecked = i == 0
+                setOnClickListener {
+                    selectedRegionalSource = sourceName
+                    submitFilteredFeed(viewModel.feedItems.value.orEmpty())
+                }
+            }.also { binding.chipGroupRegional.addView(it) }
         }
     }
 
@@ -95,7 +128,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.feedItems.observe(viewLifecycleOwner) { if (!isSearchMode) feedAdapter.submitContentList(it) }
+        viewModel.feedItems.observe(viewLifecycleOwner) { items ->
+            if (!isSearchMode) submitFilteredFeed(items)
+        }
         viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
             binding.swipeRefresh.isRefreshing = loading
             binding.shimmerLayout.showIf(loading && feedAdapter.itemCount == 0)
@@ -105,14 +140,14 @@ class HomeFragment : Fragment() {
         viewModel.activeCategory.observe(viewLifecycleOwner) { active ->
             for (i in 0 until binding.chipGroupCategory.childCount)
                 (binding.chipGroupCategory.getChildAt(i) as? Chip)?.isChecked = Category.entries[i] == active
+            binding.scrollRegionalFilter.showIf(active == Category.REGIONAL)
         }
         lifecycleScope.launch { viewModel.bookmarkIds.collect { feedAdapter.updateBookmarkedIds(it) } }
         lifecycleScope.launch { viewModel.summaries.collect { feedAdapter.updateSummaryStates(it) } }
         lifecycleScope.launch {
             viewModel.youtubeError.collect { error ->
-                if (!error.isNullOrBlank()) {
+                if (!error.isNullOrBlank())
                     Snackbar.make(binding.root, "YouTube: $error", Snackbar.LENGTH_LONG).show()
-                }
             }
         }
         viewModel.searchResults.observe(viewLifecycleOwner) { results ->
@@ -125,6 +160,14 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun submitFilteredFeed(items: List<ContentItem>) {
+        val filtered = if (viewModel.activeCategory.value == Category.REGIONAL && selectedRegionalSource != null)
+            items.filter { it.sourceName == selectedRegionalSource }
+        else
+            items
+        feedAdapter.submitContentList(filtered)
+    }
+
     private fun performSearch(query: String) {
         isSearchMode = true
         currentSearchQuery = query
@@ -134,23 +177,22 @@ class HomeFragment : Fragment() {
     private fun exitSearch() {
         isSearchMode = false
         viewModel.clearSearch()
-        feedAdapter.submitContentList(viewModel.feedItems.value.orEmpty())
+        submitFilteredFeed(viewModel.feedItems.value.orEmpty())
     }
 
     private fun openStream(item: ContentItem) {
         if (item.source == FeedSource.YOUTUBE) {
-            // YouTube videos seedha YouTube app mein khulengi
-            val youtubeAppIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.contentUrl)).apply {
+            val youtubeIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.contentUrl)).apply {
                 setPackage("com.google.android.youtube")
             }
-            if (youtubeAppIntent.resolveActivity(requireContext().packageManager) != null) {
-                startActivity(youtubeAppIntent)
+            if (youtubeIntent.resolveActivity(requireContext().packageManager) != null) {
+                startActivity(youtubeIntent)
             } else {
-                // YouTube app nahi hai to browser mein open karo
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(item.contentUrl)))
             }
         } else {
-            startActivity(Intent(requireContext(), StreamActivity::class.java).putExtra(StreamActivity.EXTRA_CONTENT_ITEM, item))
+            startActivity(Intent(requireContext(), StreamActivity::class.java)
+                .putExtra(StreamActivity.EXTRA_CONTENT_ITEM, item))
         }
     }
 

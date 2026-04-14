@@ -19,6 +19,16 @@ import com.ankush.streamhub.ui.stream.StreamActivity
 import com.ankush.streamhub.util.*
 import kotlinx.coroutines.launch
 
+private val REGIONAL_LANGUAGES = linkedMapOf(
+    "All"      to null,
+    "हिंदी"   to "BBC Hindi",
+    "தமிழ்"   to "BBC Tamil",
+    "తెలుగు"  to "BBC Telugu",
+    "বাংলা"   to "BBC Bengali",
+    "मराठी"   to "BBC Marathi",
+    "ગુજરાતી" to "BBC Gujarati"
+)
+
 class DiscoverFragment : Fragment() {
 
     private var _binding: FragmentDiscoverBinding? = null
@@ -30,7 +40,8 @@ class DiscoverFragment : Fragment() {
 
     private lateinit var adapter: FeedAdapter
     private var selectedCategory: Category = Category.VIDEOS
-    private var trendingFilter: String? = null  // null = no trending filter active
+    private var trendingFilter: String? = null
+    private var selectedRegionalSource: String? = null  // null = show all regional
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
@@ -51,21 +62,38 @@ class DiscoverFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        // Category chips
+        // Category chips (skip ALL)
         Category.entries.drop(1).forEachIndexed { i, category ->
             Chip(requireContext()).apply {
                 text = "${category.emoji} ${category.label}"
                 isCheckable = true
                 isChecked   = i == 0
                 setOnClickListener {
-                    trendingFilter = null  // clear trending filter when switching category
+                    trendingFilter = null
+                    selectedRegionalSource = null
                     selectedCategory = category
+                    binding.scrollRegionalFilter.showIf(category == Category.REGIONAL)
+                    (binding.chipGroupRegional.getChildAt(0) as? Chip)?.isChecked = true
                     filterAndSubmit()
                 }
             }.also { binding.chipGroupDiscover.addView(it) }
         }
 
-        // Trending topics
+        // Regional language sub-chips
+        REGIONAL_LANGUAGES.entries.forEachIndexed { i, (label, sourceName) ->
+            Chip(requireContext()).apply {
+                text = label
+                isCheckable = true
+                isChecked   = i == 0
+                setOnClickListener {
+                    selectedRegionalSource = sourceName
+                    trendingFilter = null
+                    filterAndSubmit()
+                }
+            }.also { binding.chipGroupRegional.addView(it) }
+        }
+
+        // Trending topic chips
         viewModel.trendingTopics.observe(viewLifecycleOwner) { topics ->
             buildTrendingChips(topics)
             binding.layoutTrending.showIf(topics.isNotEmpty())
@@ -86,7 +114,7 @@ class DiscoverFragment : Fragment() {
         binding.chipGroupTrending.removeAllViews()
         topics.forEach { topic ->
             Chip(requireContext()).apply {
-                text  = "#$topic"
+                text = "#$topic"
                 isCheckable = true
                 setOnClickListener {
                     val wasActive = isChecked
@@ -106,14 +134,15 @@ class DiscoverFragment : Fragment() {
 
     private fun filterAndSubmit() {
         val all = viewModel.allFeedItems.value.orEmpty()
-        val filtered = if (trendingFilter != null) {
-            // Trending filter overrides category — search across all categories
-            val kw = trendingFilter!!.lowercase()
-            all.filter {
-                it.title.lowercase().contains(kw) || it.description.lowercase().contains(kw)
+        val filtered = when {
+            trendingFilter != null -> {
+                val kw = trendingFilter!!.lowercase()
+                all.filter { it.title.lowercase().contains(kw) || it.description.lowercase().contains(kw) }
             }
-        } else {
-            all.filter { it.category == selectedCategory }
+            selectedCategory == Category.REGIONAL && selectedRegionalSource != null -> {
+                all.filter { it.category == Category.REGIONAL && it.sourceName == selectedRegionalSource }
+            }
+            else -> all.filter { it.category == selectedCategory }
         }
         adapter.submitContentList(filtered)
         binding.tvEmpty.showIf(filtered.isEmpty() && viewModel.isLoading.value == false)

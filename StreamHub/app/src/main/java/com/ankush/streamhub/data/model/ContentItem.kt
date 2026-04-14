@@ -45,7 +45,6 @@ enum class ContentType(val label: String) {
 enum class Category(val label: String, val emoji: String) {
     ALL("All", "🌐"),
     VIDEOS("Videos", "▶️"),
-    LIVE("Live", "🔴"),
     NEWS("News", "📰"),
     PODCASTS("Podcasts", "🎙️"),
     GAMING("Gaming", "🎮"),
@@ -90,8 +89,6 @@ object DefaultFeeds {
         FeedConfig("yt-tech",      "YouTube Tech India",    "yt://trending/tech",    FeedSource.YOUTUBE, Category.TECH),
         FeedConfig("yt-sports",    "YouTube Sports India",  "yt://trending/sports",  FeedSource.YOUTUBE, Category.SPORTS),
         FeedConfig("yt-gaming",    "YouTube Gaming India",  "yt://trending/gaming",  FeedSource.YOUTUBE, Category.GAMING),
-        FeedConfig("yt-live",      "YouTube Live India",    "yt://live",             FeedSource.YOUTUBE, Category.LIVE),
-
         // ── Indian News ───────────────────────────────────────────────────────
         FeedConfig("ndtv",         "NDTV",                  "https://feeds.feedburner.com/ndtvnews-top-stories",                    FeedSource.NEWS, Category.NEWS),
         FeedConfig("toi",          "Times of India",         "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",          FeedSource.NEWS, Category.NEWS),
