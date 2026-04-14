@@ -51,7 +51,8 @@ enum class Category(val label: String, val emoji: String) {
     GAMING("Gaming", "🎮"),
     TECH("Tech", "💻"),
     SPORTS("Sports", "⚽"),
-    MUSIC("Music", "🎵")
+    MUSIC("Music", "🎵"),
+    REGIONAL("Regional", "🌍")
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -114,5 +115,20 @@ object DefaultFeeds {
         FeedConfig("bw-hungama",   "Bollywood Hungama",      "https://www.bollywoodhungama.com/rss/news.xml",                       FeedSource.RSS,  Category.MUSIC),
         FeedConfig("pinkvilla",    "Pinkvilla",              "https://www.pinkvilla.com/rss.xml",                                   FeedSource.RSS,  Category.MUSIC),
         FeedConfig("koimoi",       "Koimoi",                 "https://www.koimoi.com/feed/",                                        FeedSource.RSS,  Category.MUSIC),
+
+        // ── Regional Languages (BBC) ──────────────────────────────────────────
+        FeedConfig("bbc-hindi",    "BBC Hindi",              "https://feeds.bbci.co.uk/hindi/rss.xml",                              FeedSource.NEWS, Category.REGIONAL),
+        FeedConfig("bbc-tamil",    "BBC Tamil",              "https://feeds.bbci.co.uk/tamil/rss.xml",                              FeedSource.NEWS, Category.REGIONAL),
+        FeedConfig("bbc-telugu",   "BBC Telugu",             "https://feeds.bbci.co.uk/telugu/rss.xml",                             FeedSource.NEWS, Category.REGIONAL),
+        FeedConfig("bbc-bengali",  "BBC Bengali",            "https://feeds.bbci.co.uk/bengali/rss.xml",                            FeedSource.NEWS, Category.REGIONAL),
+        FeedConfig("bbc-marathi",  "BBC Marathi",            "https://feeds.bbci.co.uk/marathi/rss.xml",                            FeedSource.NEWS, Category.REGIONAL),
+        FeedConfig("bbc-gujarati", "BBC Gujarati",           "https://feeds.bbci.co.uk/gujarati/rss.xml",                           FeedSource.NEWS, Category.REGIONAL),
+
+        // ── Reddit India ──────────────────────────────────────────────────────
+        FeedConfig("reddit-india",     "Reddit r/india",     "https://www.reddit.com/r/india/.rss",                                 FeedSource.RSS,  Category.NEWS),
+        FeedConfig("reddit-cricket",   "Reddit r/Cricket",   "https://www.reddit.com/r/Cricket/.rss",                               FeedSource.RSS,  Category.SPORTS),
+        FeedConfig("reddit-bollywood", "Reddit r/bollywood", "https://www.reddit.com/r/bollywood/.rss",                             FeedSource.RSS,  Category.MUSIC),
+        FeedConfig("reddit-tech",      "Reddit r/India Tech","https://www.reddit.com/r/developersIndia/.rss",                       FeedSource.RSS,  Category.TECH),
+        FeedConfig("reddit-gaming",    "Reddit r/IndianGaming","https://www.reddit.com/r/IndianGaming/.rss",                        FeedSource.RSS,  Category.GAMING),
     )
 }

@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
         feedAdapter = FeedAdapter(
             onItemClick      = { openStream(it) },
             onBookmarkClick  = { viewModel.toggleBookmark(it) },
-            onShareClick     = { requireContext().shareUrl(it.sourceUrl, it.title) },
+            onShareClick     = { requireContext().showShareOptions(it.sourceUrl, it.title) },
             onSummarizeClick = { viewModel.summarizeItem(it) }
         )
         binding.recyclerView.apply {

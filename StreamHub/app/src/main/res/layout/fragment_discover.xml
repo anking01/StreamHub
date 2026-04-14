@@ -16,6 +16,7 @@
         app:title="Discover"
         app:titleTextColor="@color/text_primary" />
 
+    <!-- Category chips -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="52dp"
@@ -31,6 +32,49 @@
             android:gravity="center_vertical" />
 
     </HorizontalScrollView>
+
+    <!-- Trending Topics -->
+    <LinearLayout
+        android:id="@+id/layout_trending"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="4dp"
+        android:background="@color/background"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔥 Trending"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:fontFamily="sans-serif-medium"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="6dp" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:scrollbars="none"
+            android:paddingHorizontal="12dp">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_trending"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical" />
+
+        </HorizontalScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progress_bar"

@@ -76,6 +76,10 @@ class StreamActivity : AppCompatActivity() {
         setupBackNavigation()
         populateInfo()
         loadContent()
+
+        // Log watch history and analytics
+        viewModel.logWatchHistory(item)
+        com.ankush.streamhub.util.Analytics.contentOpen(item)
     }
 
     private fun setupToolbar() {
@@ -146,9 +150,11 @@ class StreamActivity : AppCompatActivity() {
             ).show()
         }
 
-        // Share
+        // Share — show WhatsApp + generic options
         binding.btnShare.setOnClickListener {
-            shareUrl(item.sourceUrl, item.title)
+            showShareOptions(item.sourceUrl, item.title) { method ->
+                com.ankush.streamhub.util.Analytics.shareClicked(method)
+            }
         }
 
         // Open in browser
@@ -298,15 +304,6 @@ class StreamActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_CONTENT_ITEM = "extra_content_item"
-    }
-
-    // Helper: share URL
-    private fun shareUrl(url: String, title: String) {
-        startActivity(Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_SUBJECT, title)
-            putExtra(Intent.EXTRA_TEXT, "$title\n\n$url")
-        }.let { Intent.createChooser(it, "Share via") })
     }
 
     private fun openInBrowser(url: String) {

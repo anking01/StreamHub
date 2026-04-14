@@ -25,6 +25,7 @@ class FeedAdapter(
     private val onBookmarkClick: (ContentItem) -> Unit,
     private val onShareClick: (ContentItem) -> Unit,
     private val onSummarizeClick: (ContentItem) -> Unit,
+    private val onLongClick: ((ContentItem) -> Unit)? = null,
 ) : ListAdapter<FeedListItem, RecyclerView.ViewHolder>(FeedDiffCallback()) {
 
     private var bookmarkedIds: Set<String> = emptySet()
@@ -127,6 +128,7 @@ class FeedAdapter(
             updateSummary(summaryStates[item.id] ?: SummaryState.Idle)
 
             binding.root.setOnClickListener { onItemClick(item) }
+            binding.root.setOnLongClickListener { onLongClick?.invoke(item); onLongClick != null }
             binding.btnBookmark.setOnClickListener { onBookmarkClick(item) }
             binding.btnShare.setOnClickListener { onShareClick(item) }
             binding.btnTldr.setOnClickListener { onSummarizeClick(item) }

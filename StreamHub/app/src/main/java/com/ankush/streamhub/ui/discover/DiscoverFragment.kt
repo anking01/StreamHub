@@ -30,6 +30,7 @@ class DiscoverFragment : Fragment() {
 
     private lateinit var adapter: FeedAdapter
     private var selectedCategory: Category = Category.VIDEOS
+    private var trendingFilter: String? = null  // null = no trending filter active
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
@@ -42,7 +43,7 @@ class DiscoverFragment : Fragment() {
         adapter = FeedAdapter(
             onItemClick      = { openStream(it) },
             onBookmarkClick  = { viewModel.toggleBookmark(it) },
-            onShareClick     = { requireContext().shareUrl(it.sourceUrl, it.title) },
+            onShareClick     = { requireContext().showShareOptions(it.sourceUrl, it.title) },
             onSummarizeClick = { viewModel.summarizeItem(it) }
         )
         binding.recyclerView.apply {
@@ -50,13 +51,24 @@ class DiscoverFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
+        // Category chips
         Category.entries.drop(1).forEachIndexed { i, category ->
             Chip(requireContext()).apply {
                 text = "${category.emoji} ${category.label}"
                 isCheckable = true
-                isChecked = i == 0
-                setOnClickListener { selectedCategory = category; filterAndSubmit() }
+                isChecked   = i == 0
+                setOnClickListener {
+                    trendingFilter = null  // clear trending filter when switching category
+                    selectedCategory = category
+                    filterAndSubmit()
+                }
             }.also { binding.chipGroupDiscover.addView(it) }
+        }
+
+        // Trending topics
+        viewModel.trendingTopics.observe(viewLifecycleOwner) { topics ->
+            buildTrendingChips(topics)
+            binding.layoutTrending.showIf(topics.isNotEmpty())
         }
 
         viewModel.allFeedItems.observe(viewLifecycleOwner) { filterAndSubmit() }
@@ -70,8 +82,39 @@ class DiscoverFragment : Fragment() {
         }
     }
 
+    private fun buildTrendingChips(topics: List<String>) {
+        binding.chipGroupTrending.removeAllViews()
+        topics.forEach { topic ->
+            Chip(requireContext()).apply {
+                text  = "#$topic"
+                isCheckable = true
+                setOnClickListener {
+                    val wasActive = isChecked
+                    binding.chipGroupTrending.clearCheck()
+                    if (!wasActive) {
+                        isChecked = true
+                        trendingFilter = topic
+                        Analytics.trendingTopicClicked(topic)
+                    } else {
+                        trendingFilter = null
+                    }
+                    filterAndSubmit()
+                }
+            }.also { binding.chipGroupTrending.addView(it) }
+        }
+    }
+
     private fun filterAndSubmit() {
-        val filtered = viewModel.allFeedItems.value.orEmpty().filter { it.category == selectedCategory }
+        val all = viewModel.allFeedItems.value.orEmpty()
+        val filtered = if (trendingFilter != null) {
+            // Trending filter overrides category — search across all categories
+            val kw = trendingFilter!!.lowercase()
+            all.filter {
+                it.title.lowercase().contains(kw) || it.description.lowercase().contains(kw)
+            }
+        } else {
+            all.filter { it.category == selectedCategory }
+        }
         adapter.submitContentList(filtered)
         binding.tvEmpty.showIf(filtered.isEmpty() && viewModel.isLoading.value == false)
     }

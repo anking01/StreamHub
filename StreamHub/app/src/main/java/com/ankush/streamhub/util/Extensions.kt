@@ -56,6 +56,45 @@ fun Context.shareUrl(url: String, title: String = "") {
     startActivity(Intent.createChooser(intent, "Share via"))
 }
 
+fun Context.shareToWhatsApp(url: String, title: String = "") {
+    val text = if (title.isNotBlank()) "$title\n\n$url" else url
+    try {
+        startActivity(Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            setPackage("com.whatsapp")
+            putExtra(Intent.EXTRA_TEXT, text)
+        })
+    } catch (e: Exception) {
+        // WhatsApp not installed — fall back to generic share
+        shareUrl(url, title)
+    }
+}
+
+// Show share options: WhatsApp first, then generic chooser
+fun Context.showShareOptions(url: String, title: String = "", onAnalytics: ((String) -> Unit)? = null) {
+    val whatsappInstalled = try {
+        packageManager.getPackageInfo("com.whatsapp", 0); true
+    } catch (e: Exception) { false }
+
+    val options = if (whatsappInstalled)
+        arrayOf("💬 Share on WhatsApp", "📤 More options...")
+    else
+        arrayOf("📤 Share via...")
+
+    android.app.AlertDialog.Builder(this)
+        .setTitle("Share")
+        .setItems(options) { _, which ->
+            if (whatsappInstalled && which == 0) {
+                onAnalytics?.invoke("whatsapp")
+                shareToWhatsApp(url, title)
+            } else {
+                onAnalytics?.invoke("generic")
+                shareUrl(url, title)
+            }
+        }
+        .show()
+}
+
 fun Context.openInBrowser(url: String) {
     try {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))

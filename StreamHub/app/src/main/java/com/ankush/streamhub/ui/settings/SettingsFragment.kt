@@ -66,6 +66,7 @@ class SettingsFragment : Fragment() {
         }
 
         setupAiProviderSettings()
+        setupDigestToggle()
 
         binding.tvVersion.text = "StreamHub v1.0.0 • Built with ❤️ in Kotlin"
     }
@@ -140,6 +141,16 @@ class SettingsFragment : Fragment() {
             prefs.aiProvider = AppPreferences.PROVIDER_OLLAMA
             binding.rgAiProvider.check(R.id.rb_ollama)
             requireContext().toast("✓ Ollama API key saved!")
+        }
+    }
+
+    private fun setupDigestToggle() {
+        binding.switchDigest.isChecked = prefs.digestEnabled
+        binding.switchDigest.setOnCheckedChangeListener { _, isChecked ->
+            prefs.digestEnabled = isChecked
+            requireContext().toast(
+                if (isChecked) "📰 Daily digest enabled" else "Daily digest disabled"
+            )
         }
     }
 
