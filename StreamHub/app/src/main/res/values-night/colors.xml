@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#0A0A0F</color>
-    <color name="surface">#13131A</color>
-    <color name="surface_variant">#1C1C26</color>
-    <color name="divider">#2A2A3A</color>
+    <color name="background">#000000</color>
+    <color name="surface">#1B1B1B</color>
+    <color name="surface_variant">#242424</color>
+    <color name="divider">#333333</color>
     <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#8888AA</color>
-    <color name="text_hint">#555570</color>
-    <color name="shimmer_base">#1C1C26</color>
-    <color name="shimmer_highlight">#2A2A36</color>
-    <color name="primary_container">#2E2A6E</color>
+    <color name="text_secondary">#AAAAAA</color>
+    <color name="text_hint">#666666</color>
+    <color name="shimmer_base">#1B1B1B</color>
+    <color name="shimmer_highlight">#2E2E2E</color>
+    <color name="primary_container">#3A2200</color>
 </resources>

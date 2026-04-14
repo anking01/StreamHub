@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Brand Colors -->
-    <color name="primary">#6C63FF</color>
-    <color name="primary_dark">#4A44CC</color>
-    <color name="primary_light">#8B84FF</color>
-    <color name="primary_container">#EAE9FF</color>
+    <!-- Brand Colors — Black & Orange -->
+    <color name="primary">#FF9000</color>
+    <color name="primary_dark">#E67E00</color>
+    <color name="primary_light">#FFB347</color>
+    <color name="primary_container">#3A2200</color>
 
     <!-- Status Colors -->
     <color name="live_red">#FF3B30</color>
     <color name="success">#34C759</color>
-    <color name="warning">#FF9500</color>
+    <color name="warning">#FF9000</color>
     <color name="error">#FF3B30</color>
 
     <!-- Source Colors -->
     <color name="youtube_red">#FF0000</color>
     <color name="twitch_purple">#9147FF</color>
-    <color name="rss_orange">#FF9500</color>
+    <color name="rss_orange">#FF9000</color>
 
-    <!-- Light Theme Backgrounds -->
-    <color name="background">#F4F4F8</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="surface_variant">#F0F0F5</color>
-    <color name="divider">#E0E0EA</color>
+    <!-- Backgrounds — Pure Black -->
+    <color name="background">#000000</color>
+    <color name="surface">#1B1B1B</color>
+    <color name="surface_variant">#242424</color>
+    <color name="divider">#333333</color>
 
-    <!-- Light Theme Text -->
-    <color name="text_primary">#0A0A0F</color>
-    <color name="text_secondary">#555570</color>
-    <color name="text_hint">#9090A8</color>
+    <!-- Text -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#AAAAAA</color>
+    <color name="text_hint">#666666</color>
 
     <!-- Shimmer -->
-    <color name="shimmer_base">#E8E8EE</color>
-    <color name="shimmer_highlight">#F8F8FC</color>
+    <color name="shimmer_base">#1B1B1B</color>
+    <color name="shimmer_highlight">#2E2E2E</color>
 
     <!-- Misc -->
     <color name="black">#000000</color>
