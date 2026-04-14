@@ -7,6 +7,15 @@ import com.ankush.streamhub.data.model.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
+private val SOURCE_EMOJI = mapOf(
+    FeedSource.YOUTUBE  to "📺",
+    FeedSource.NEWS     to "📰",
+    FeedSource.RSS      to "📡",
+    FeedSource.PODCAST  to "🎙️",
+    FeedSource.TWITCH   to "🟣",
+    FeedSource.CUSTOM   to "🔗"
+)
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared ViewModel – owned by MainActivity, shared across all fragments
 // ─────────────────────────────────────────────────────────────────────────────
@@ -19,6 +28,10 @@ class SharedViewModel(private val app: StreamHubApp) : AndroidViewModel(app) {
 
     private val _feedItems   = MutableLiveData<List<ContentItem>>(emptyList())
     val feedItems: LiveData<List<ContentItem>> = _feedItems
+
+    // Always holds ALL-category items — used by Discover so it's not affected by Home's category filter
+    private val _allFeedItems = MutableLiveData<List<ContentItem>>(emptyList())
+    val allFeedItems: LiveData<List<ContentItem>> = _allFeedItems
 
     private val _isLoading   = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
@@ -42,8 +55,8 @@ class SharedViewModel(private val app: StreamHubApp) : AndroidViewModel(app) {
     val summaries: StateFlow<Map<String, SummaryState>> = _summaries.asStateFlow()
 
     // ── Search state ──────────────────────────────────────────
-    private val _searchResults = MutableLiveData<List<ContentItem>>(emptyList())
-    val searchResults: LiveData<List<ContentItem>> = _searchResults
+    private val _searchResults = MutableLiveData<List<FeedListItem>>(emptyList())
+    val searchResults: LiveData<List<FeedListItem>> = _searchResults
 
     // ── Feed sources (in-memory, user can toggle/add) ─────────
     private val _feedSources = MutableLiveData(DefaultFeeds.list.toMutableList())
@@ -66,6 +79,7 @@ class SharedViewModel(private val app: StreamHubApp) : AndroidViewModel(app) {
             result
                 .onSuccess { items ->
                     _feedItems.value = items
+                    if (category == Category.ALL) _allFeedItems.value = items
                     _isLoading.value = false
                 }
                 .onFailure { err ->
@@ -84,7 +98,16 @@ class SharedViewModel(private val app: StreamHubApp) : AndroidViewModel(app) {
 
     fun search(query: String) {
         viewModelScope.launch {
-            _searchResults.value = repository.searchFeed(query)
+            val flat = repository.searchFeed(query)
+            // Group by source, add section headers
+            val grouped = flat
+                .groupBy { it.source }
+                .flatMap { (source, items) ->
+                    val emoji = SOURCE_EMOJI[source] ?: "📌"
+                    listOf(FeedListItem.Header(source.label, emoji, items.size)) +
+                    items.map { FeedListItem.Item(it) }
+                }
+            _searchResults.value = grouped
         }
     }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "845827820744",
+    "project_id": "streamhub-4acc3",
+    "storage_bucket": "streamhub-4acc3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845827820744:android:d27908ff28700866cde9fd",
+        "android_client_info": {
+          "package_name": "com.ankush.streamhub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADvIAHnxQvifvHUhAZDB-_K1S_kebpazI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

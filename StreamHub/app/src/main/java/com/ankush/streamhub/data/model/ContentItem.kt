@@ -55,6 +55,15 @@ enum class Category(val label: String, val emoji: String) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Adapter list item — header OR content card (used for sectioned search results)
+// ─────────────────────────────────────────────────────────────────────────────
+
+sealed class FeedListItem {
+    data class Header(val title: String, val emoji: String, val count: Int) : FeedListItem()
+    data class Item(val contentItem: ContentItem) : FeedListItem()
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Feed source configuration model
 // ─────────────────────────────────────────────────────────────────────────────
 

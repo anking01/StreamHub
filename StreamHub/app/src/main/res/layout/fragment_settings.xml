@@ -78,7 +78,7 @@
                 android:id="@+id/rg_ai_provider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingHorizontal="16dp"
                 android:paddingBottom="8dp">
 
@@ -87,8 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="✨ Gemini (built-in)"
-                    android:textColor="@color/text_primary"
-                    android:layout_marginEnd="24dp" />
+                    android:textColor="@color/text_primary" />
 
                 <RadioButton
                     android:id="@+id/rb_groq"
@@ -97,8 +96,16 @@
                     android:text="⚡ Groq (fast + free)"
                     android:textColor="@color/text_primary" />
 
+                <RadioButton
+                    android:id="@+id/rb_ollama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🦙 Ollama (Llama)"
+                    android:textColor="@color/text_primary" />
+
             </RadioGroup>
 
+            <!-- Groq Key -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_groq_key"
                 android:layout_width="match_parent"
@@ -124,6 +131,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginBottom="8dp"
+                android:text="Save Key"
+                style="@style/Widget.Material3.Button.TonalButton" />
+
+            <!-- Ollama Key -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_ollama_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Ollama API Key"
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_ollama_key"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/text_primary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_ollama_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 android:text="Save Key"
                 style="@style/Widget.Material3.Button.TonalButton" />
 
@@ -171,6 +209,29 @@
                 android:textSize="13sp"
                 android:gravity="center"
                 android:padding="16dp" />
+
+            <!-- Admin Panel Button (only visible to admins) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_admin_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="8dp"
+                android:text="Admin Panel"
+                android:visibility="gone"
+                style="@style/Widget.Material3.Button.TonalButton" />
+
+            <!-- Logout Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginBottom="16dp"
+                android:text="Logout"
+                android:textColor="@color/error"
+                app:strokeColor="@color/error"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
 
         </LinearLayout>
 

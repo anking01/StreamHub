@@ -1,20 +1,27 @@
 package com.ankush.streamhub.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 import com.ankush.streamhub.AppPreferences
 import com.ankush.streamhub.R
 import com.ankush.streamhub.StreamHubApp
 import com.ankush.streamhub.data.model.*
+import com.ankush.streamhub.data.remote.FirestoreRepository
 import com.ankush.streamhub.databinding.FragmentSettingsBinding
 import com.ankush.streamhub.ui.SharedViewModel
 import com.ankush.streamhub.ui.SharedViewModelFactory
+import com.ankush.streamhub.ui.auth.AuthActivity
 import com.ankush.streamhub.util.*
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 class SettingsFragment : Fragment() {
@@ -34,10 +41,12 @@ class SettingsFragment : Fragment() {
     }
 
     private val prefs by lazy { (requireActivity().application as StreamHubApp).preferences }
+    private val firestoreRepo by lazy { FirestoreRepository() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupAccountSection()
         binding.btnAddFeed.setOnClickListener { showAddFeedDialog() }
 
         binding.btnClearBookmarks.setOnClickListener {
@@ -61,49 +70,84 @@ class SettingsFragment : Fragment() {
         binding.tvVersion.text = "StreamHub v1.0.0 • Built with ❤️ in Kotlin"
     }
 
+    private fun setupAccountSection() {
+        // Check if current user is admin → show Admin Panel button
+        lifecycleScope.launch {
+            val isAdmin = firestoreRepo.isCurrentUserAdmin()
+            binding.btnAdminPanel.showIf(isAdmin)
+        }
+
+        binding.btnAdminPanel.setOnClickListener {
+            findNavController().navigate(R.id.action_settings_to_admin)
+        }
+
+        binding.btnLogout.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Logout")
+                .setMessage("Logout karna chahte ho?")
+                .setPositiveButton("Haan") { _, _ ->
+                    FirebaseAuth.getInstance().signOut()
+                    startActivity(Intent(requireContext(), AuthActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+                    requireActivity().finish()
+                }
+                .setNegativeButton("Nahi", null)
+                .show()
+        }
+    }
+
     private fun setupAiProviderSettings() {
         // Set current provider selection
-        if (prefs.aiProvider == AppPreferences.PROVIDER_GROQ) {
-            binding.rgAiProvider.check(R.id.rb_groq)
-        } else {
-            binding.rgAiProvider.check(R.id.rb_gemini)
+        when (prefs.aiProvider) {
+            AppPreferences.PROVIDER_GROQ   -> binding.rgAiProvider.check(R.id.rb_groq)
+            AppPreferences.PROVIDER_OLLAMA -> binding.rgAiProvider.check(R.id.rb_ollama)
+            else                           -> binding.rgAiProvider.check(R.id.rb_gemini)
         }
 
-        // Show/hide Groq key field based on selection
-        updateGroqKeyVisibility(prefs.aiProvider == AppPreferences.PROVIDER_GROQ)
+        updateKeyFieldVisibility(prefs.aiProvider)
 
-        // Pre-fill saved Groq key (masked)
-        if (prefs.groqApiKey.isNotBlank()) {
-            binding.etGroqKey.setText(prefs.groqApiKey)
-        }
+        if (prefs.groqApiKey.isNotBlank())   binding.etGroqKey.setText(prefs.groqApiKey)
+        if (prefs.ollamaApiKey.isNotBlank()) binding.etOllamaKey.setText(prefs.ollamaApiKey)
 
         binding.rgAiProvider.setOnCheckedChangeListener { _, checkedId ->
-            val provider = if (checkedId == R.id.rb_groq) AppPreferences.PROVIDER_GROQ
-                           else AppPreferences.PROVIDER_GEMINI
+            val provider = when (checkedId) {
+                R.id.rb_groq   -> AppPreferences.PROVIDER_GROQ
+                R.id.rb_ollama -> AppPreferences.PROVIDER_OLLAMA
+                else           -> AppPreferences.PROVIDER_GEMINI
+            }
             prefs.aiProvider = provider
-            updateGroqKeyVisibility(provider == AppPreferences.PROVIDER_GROQ)
-            requireContext().toast(
-                if (provider == AppPreferences.PROVIDER_GROQ) "⚡ Groq selected"
-                else "✨ Gemini selected"
-            )
+            updateKeyFieldVisibility(provider)
+            requireContext().toast(when (provider) {
+                AppPreferences.PROVIDER_GROQ   -> "⚡ Groq selected"
+                AppPreferences.PROVIDER_OLLAMA -> "🦙 Ollama selected"
+                else                           -> "✨ Gemini selected"
+            })
         }
 
         binding.btnSaveGroqKey.setOnClickListener {
             val key = binding.etGroqKey.text?.toString()?.trim().orEmpty()
-            if (key.isBlank()) {
-                requireContext().toast("API key cannot be empty")
-                return@setOnClickListener
-            }
+            if (key.isBlank()) { requireContext().toast("API key cannot be empty"); return@setOnClickListener }
             prefs.groqApiKey = key
             prefs.aiProvider = AppPreferences.PROVIDER_GROQ
             binding.rgAiProvider.check(R.id.rb_groq)
             requireContext().toast("✓ Groq API key saved!")
         }
+
+        binding.btnSaveOllamaKey.setOnClickListener {
+            val key = binding.etOllamaKey.text?.toString()?.trim().orEmpty()
+            if (key.isBlank()) { requireContext().toast("API key cannot be empty"); return@setOnClickListener }
+            prefs.ollamaApiKey = key
+            prefs.aiProvider = AppPreferences.PROVIDER_OLLAMA
+            binding.rgAiProvider.check(R.id.rb_ollama)
+            requireContext().toast("✓ Ollama API key saved!")
+        }
     }
 
-    private fun updateGroqKeyVisibility(show: Boolean) {
-        binding.tilGroqKey.showIf(show)
-        binding.btnSaveGroqKey.showIf(show)
+    private fun updateKeyFieldVisibility(provider: String) {
+        binding.tilGroqKey.showIf(provider == AppPreferences.PROVIDER_GROQ)
+        binding.btnSaveGroqKey.showIf(provider == AppPreferences.PROVIDER_GROQ)
+        binding.tilOllamaKey.showIf(provider == AppPreferences.PROVIDER_OLLAMA)
+        binding.btnSaveOllamaKey.showIf(provider == AppPreferences.PROVIDER_OLLAMA)
     }
 
     private fun renderFeedList(sources: List<FeedConfig>) {

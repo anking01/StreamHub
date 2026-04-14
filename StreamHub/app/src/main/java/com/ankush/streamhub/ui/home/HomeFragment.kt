@@ -3,14 +3,12 @@ package com.ankush.streamhub.ui.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
@@ -18,6 +16,7 @@ import com.ankush.streamhub.R
 import com.ankush.streamhub.StreamHubApp
 import com.ankush.streamhub.data.model.Category
 import com.ankush.streamhub.data.model.ContentItem
+import com.ankush.streamhub.data.model.FeedListItem
 import com.ankush.streamhub.data.model.FeedSource
 import com.ankush.streamhub.databinding.FragmentHomeBinding
 import com.ankush.streamhub.ui.SharedViewModel
@@ -37,6 +36,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var feedAdapter: FeedAdapter
     private var isSearchMode = false
+    private var currentSearchQuery = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         setupCategoryChips()
         setupSwipeRefresh()
-        setupSearchMenu()
+        setupSearch()
         observeData()
     }
 
@@ -83,29 +83,19 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupSearchMenu() {
-        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, inflater: MenuInflater) {
-                inflater.inflate(R.menu.menu_home, menu)
-                val sv = menu.findItem(R.id.action_search).actionView as SearchView
-                sv.queryHint = "Search content…"
-                sv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(q: String?): Boolean { q?.let { performSearch(it) }; return true }
-                    override fun onQueryTextChange(t: String?): Boolean {
-                        if (t.isNullOrBlank()) exitSearch() else performSearch(t); return true
-                    }
-                })
-                menu.findItem(R.id.action_search).setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-                    override fun onMenuItemActionExpand(item: MenuItem) = true
-                    override fun onMenuItemActionCollapse(item: MenuItem): Boolean { exitSearch(); return true }
-                })
+    private fun setupSearch() {
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val query = s?.toString()?.trim().orEmpty()
+                if (query.isBlank()) exitSearch() else performSearch(query)
             }
-            override fun onMenuItemSelected(item: MenuItem) = false
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+        })
     }
 
     private fun observeData() {
-        viewModel.feedItems.observe(viewLifecycleOwner) { if (!isSearchMode) submitList(it) }
+        viewModel.feedItems.observe(viewLifecycleOwner) { if (!isSearchMode) feedAdapter.submitContentList(it) }
         viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
             binding.swipeRefresh.isRefreshing = loading
             binding.shimmerLayout.showIf(loading && feedAdapter.itemCount == 0)
@@ -125,23 +115,26 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun performSearch(query: String) {
-        isSearchMode = true
-        viewModel.search(query)
         viewModel.searchResults.observe(viewLifecycleOwner) { results ->
             if (isSearchMode) {
-                submitList(results)
-                if (results.isEmpty()) binding.tvEmptyText.text = "No results for \"$query\""
+                feedAdapter.submitList(results)
+                val hasItems = results.any { it is FeedListItem.Item }
+                binding.layoutEmpty.showIf(!hasItems)
+                if (!hasItems) binding.tvEmptyText.text = "No results for \"$currentSearchQuery\""
             }
         }
     }
 
-    private fun exitSearch() { isSearchMode = false; viewModel.clearSearch(); submitList(viewModel.feedItems.value.orEmpty()) }
-    private fun submitList(items: List<ContentItem>) {
-        feedAdapter.submitList(items)
-        binding.layoutEmpty.showIf(items.isEmpty() && viewModel.isLoading.value == false)
+    private fun performSearch(query: String) {
+        isSearchMode = true
+        currentSearchQuery = query
+        viewModel.search(query)
+    }
+
+    private fun exitSearch() {
+        isSearchMode = false
+        viewModel.clearSearch()
+        feedAdapter.submitContentList(viewModel.feedItems.value.orEmpty())
     }
 
     private fun openStream(item: ContentItem) {

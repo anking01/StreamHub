@@ -67,7 +67,7 @@ class BookmarksFragment : Fragment() {
         }
 
         viewModel.bookmarks.observe(viewLifecycleOwner) { items ->
-            adapter.submitList(items)
+            adapter.submitContentList(items)
             adapter.updateBookmarkedIds(items.map { it.id }.toSet())
             binding.layoutEmpty.showIf(items.isEmpty())
             binding.recyclerView.showIf(items.isNotEmpty())

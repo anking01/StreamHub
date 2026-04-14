@@ -59,7 +59,7 @@ class DiscoverFragment : Fragment() {
             }.also { binding.chipGroupDiscover.addView(it) }
         }
 
-        viewModel.feedItems.observe(viewLifecycleOwner) { filterAndSubmit() }
+        viewModel.allFeedItems.observe(viewLifecycleOwner) { filterAndSubmit() }
         viewModel.isLoading.observe(viewLifecycleOwner) { binding.progressBar.showIf(it) }
 
         lifecycleScope.launch {
@@ -71,8 +71,8 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun filterAndSubmit() {
-        val filtered = viewModel.feedItems.value.orEmpty().filter { it.category == selectedCategory }
-        adapter.submitList(filtered)
+        val filtered = viewModel.allFeedItems.value.orEmpty().filter { it.category == selectedCategory }
+        adapter.submitContentList(filtered)
         binding.tvEmpty.showIf(filtered.isEmpty() && viewModel.isLoading.value == false)
     }
 

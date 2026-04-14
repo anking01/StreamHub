@@ -23,6 +23,15 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.ankush.streamhub.ui.settings.SettingsFragment"
-        android:label="Settings" />
+        android:label="Settings">
+        <action
+            android:id="@+id/action_settings_to_admin"
+            app:destination="@id/adminFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminFragment"
+        android:name="com.ankush.streamhub.ui.admin.AdminFragment"
+        android:label="Admin Panel" />
 
 </navigation>

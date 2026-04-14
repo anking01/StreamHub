@@ -28,6 +28,7 @@ interface YouTubeApiService {
         @Query("eventType")  eventType: String = "live",
         @Query("type")       type: String = "video",
         @Query("order")      order: String = "viewCount",
+        @Query("regionCode") regionCode: String = "IN",
         @Query("maxResults") maxResults: Int = 30,
         @Query("key")        apiKey: String
     ): YouTubeSearchResponse

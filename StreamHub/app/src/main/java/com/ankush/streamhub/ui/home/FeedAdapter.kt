@@ -11,11 +11,13 @@ import com.ankush.streamhub.R
 import com.ankush.streamhub.ai.SummaryState
 import com.ankush.streamhub.data.model.ContentItem
 import com.ankush.streamhub.data.model.ContentType
+import com.ankush.streamhub.data.model.FeedListItem
 import com.ankush.streamhub.databinding.ItemFeedCardBinding
+import com.ankush.streamhub.databinding.ItemSectionHeaderBinding
 import com.ankush.streamhub.util.*
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Feed RecyclerView Adapter with DiffUtil
+// Feed RecyclerView Adapter — supports section headers + content cards
 // ─────────────────────────────────────────────────────────────────────────────
 
 class FeedAdapter(
@@ -23,7 +25,7 @@ class FeedAdapter(
     private val onBookmarkClick: (ContentItem) -> Unit,
     private val onShareClick: (ContentItem) -> Unit,
     private val onSummarizeClick: (ContentItem) -> Unit,
-) : ListAdapter<ContentItem, FeedAdapter.FeedViewHolder>(FeedDiffCallback()) {
+) : ListAdapter<FeedListItem, RecyclerView.ViewHolder>(FeedDiffCallback()) {
 
     private var bookmarkedIds: Set<String> = emptySet()
     private var summaryStates: Map<String, SummaryState> = emptyMap()
@@ -38,28 +40,60 @@ class FeedAdapter(
         notifyItemRangeChanged(0, itemCount, SUMMARY_PAYLOAD)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
-        val binding = ItemFeedCardBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        )
-        return FeedViewHolder(binding)
+    /** Convenience: submit a plain ContentItem list (no section headers) */
+    fun submitContentList(items: List<ContentItem>) {
+        submitList(items.map { FeedListItem.Item(it) })
     }
 
-    override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
-        holder.bind(getItem(position), bookmarkedIds)
+    override fun getItemViewType(position: Int): Int = when (getItem(position)) {
+        is FeedListItem.Header -> VIEW_TYPE_HEADER
+        is FeedListItem.Item   -> VIEW_TYPE_ITEM
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return if (viewType == VIEW_TYPE_HEADER) {
+            HeaderViewHolder(ItemSectionHeaderBinding.inflate(inflater, parent, false))
+        } else {
+            FeedViewHolder(ItemFeedCardBinding.inflate(inflater, parent, false))
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = getItem(position)) {
+            is FeedListItem.Header -> (holder as HeaderViewHolder).bind(item)
+            is FeedListItem.Item   -> (holder as FeedViewHolder).bind(item.contentItem, bookmarkedIds)
+        }
     }
 
     override fun onBindViewHolder(
-        holder: FeedViewHolder, position: Int, payloads: MutableList<Any>
+        holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>
     ) {
-        when {
-            payloads.contains(BOOKMARK_PAYLOAD) ->
-                holder.updateBookmark(getItem(position).id in bookmarkedIds)
-            payloads.contains(SUMMARY_PAYLOAD) ->
-                holder.updateSummary(summaryStates[getItem(position).id] ?: SummaryState.Idle)
-            else -> super.onBindViewHolder(holder, position, payloads)
+        if (holder is FeedViewHolder && getItem(position) is FeedListItem.Item) {
+            val item = (getItem(position) as FeedListItem.Item).contentItem
+            when {
+                payloads.contains(BOOKMARK_PAYLOAD) -> holder.updateBookmark(item.id in bookmarkedIds)
+                payloads.contains(SUMMARY_PAYLOAD)  -> holder.updateSummary(summaryStates[item.id] ?: SummaryState.Idle)
+                else -> super.onBindViewHolder(holder, position, payloads)
+            }
+        } else {
+            super.onBindViewHolder(holder, position, payloads)
         }
     }
+
+    // ── Section Header ViewHolder ─────────────────────────────────────────────
+
+    inner class HeaderViewHolder(
+        private val binding: ItemSectionHeaderBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(header: FeedListItem.Header) {
+            binding.tvSectionEmoji.text = header.emoji
+            binding.tvSectionTitle.text = header.title
+            binding.tvSectionCount.text = "${header.count} results"
+        }
+    }
+
+    // ── Content Card ViewHolder ───────────────────────────────────────────────
 
     inner class FeedViewHolder(
         private val binding: ItemFeedCardBinding
@@ -149,12 +183,18 @@ class FeedAdapter(
     }
 
     companion object {
+        private const val VIEW_TYPE_HEADER = 0
+        private const val VIEW_TYPE_ITEM   = 1
         private const val BOOKMARK_PAYLOAD = "BOOKMARK"
-        private const val SUMMARY_PAYLOAD = "SUMMARY"
+        private const val SUMMARY_PAYLOAD  = "SUMMARY"
     }
 }
 
-class FeedDiffCallback : DiffUtil.ItemCallback<ContentItem>() {
-    override fun areItemsTheSame(old: ContentItem, new: ContentItem) = old.id == new.id
-    override fun areContentsTheSame(old: ContentItem, new: ContentItem) = old == new
+class FeedDiffCallback : DiffUtil.ItemCallback<FeedListItem>() {
+    override fun areItemsTheSame(old: FeedListItem, new: FeedListItem): Boolean = when {
+        old is FeedListItem.Header && new is FeedListItem.Header -> old.title == new.title
+        old is FeedListItem.Item   && new is FeedListItem.Item   -> old.contentItem.id == new.contentItem.id
+        else -> false
+    }
+    override fun areContentsTheSame(old: FeedListItem, new: FeedListItem) = old == new
 }
