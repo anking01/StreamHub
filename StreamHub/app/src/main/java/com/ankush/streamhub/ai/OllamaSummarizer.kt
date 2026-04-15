@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -34,7 +35,10 @@ class OllamaSummarizer(private val apiKey: String) {
         if (apiKey.isBlank()) {
             return SummaryState.Error("Ollama API key nahi hai. Settings mein add karo.")
         }
+        return doSummarize(title, rawDescription, attempt = 1)
+    }
 
+    private suspend fun doSummarize(title: String, rawDescription: String, attempt: Int): SummaryState {
         return withContext(Dispatchers.IO) {
             try {
                 val description = Html.fromHtml(rawDescription, Html.FROM_HTML_MODE_COMPACT)
@@ -80,8 +84,12 @@ class OllamaSummarizer(private val apiKey: String) {
                 val text   = parsed.message?.content?.trim().orEmpty()
 
                 if (text.isBlank()) {
-                    Log.w(TAG, "Empty response from Ollama")
-                    SummaryState.Error("No summary returned")
+                    Log.w(TAG, "Empty response from Ollama (attempt $attempt). Body: ${bodyStr.take(200)}")
+                    if (attempt < 2) {
+                        delay(2000)
+                        return@withContext doSummarize(title, rawDescription, attempt + 1)
+                    }
+                    SummaryState.Error("Summary nahi mili, baad mein retry karo")
                 } else {
                     Log.d(TAG, "Ollama summary ready for: $title")
                     SummaryState.Success(text)

@@ -73,6 +73,7 @@ class SharedViewModel(private val app: StreamHubApp) : AndroidViewModel(app) {
     private val _summaries = MutableStateFlow<Map<String, SummaryState>>(emptyMap())
     val summaries: StateFlow<Map<String, SummaryState>> = _summaries.asStateFlow()
 
+
     // ── Search ────────────────────────────────────────────────
     private val _searchResults = MutableLiveData<List<FeedListItem>>(emptyList())
     val searchResults: LiveData<List<FeedListItem>> = _searchResults
@@ -97,14 +98,32 @@ class SharedViewModel(private val app: StreamHubApp) : AndroidViewModel(app) {
         loadFeed()
     }
 
-    fun loadFeed(category: Category = _activeCategory.value ?: Category.ALL) {
-        _isLoading.value = true
-        _error.value = null
+    fun loadFeed(category: Category = _activeCategory.value ?: Category.ALL, forceRefresh: Boolean = false) {
         _activeCategory.value = category
+        _error.value = null
 
         viewModelScope.launch {
             val sources = _feedSources.value ?: DefaultFeeds.list
-            val result  = repository.fetchAllFeeds(sources, category)
+
+            if (forceRefresh) {
+                // Manual refresh: keep existing data visible, show spinner until new data arrives
+                _isLoading.value = true
+            } else {
+                // Initial load: show cached data instantly, spinner only if no cache
+                val cached = repository.getCachedItems(category)
+                if (cached.isNotEmpty()) {
+                    _feedItems.value = cached
+                    if (category == Category.ALL) {
+                        _allFeedItems.value = cached
+                        updateTrendingTopics(cached)
+                    }
+                } else {
+                    _isLoading.value = true
+                }
+            }
+
+            // Fetch fresh data
+            val result = repository.fetchAllFeeds(sources, category)
             result
                 .onSuccess { items ->
                     _feedItems.value = items
@@ -112,12 +131,13 @@ class SharedViewModel(private val app: StreamHubApp) : AndroidViewModel(app) {
                         _allFeedItems.value = items
                         updateTrendingTopics(items)
                     }
-                    _isLoading.value = false
                 }
                 .onFailure { err ->
-                    _error.value = err.message ?: "Failed to load feed"
-                    _isLoading.value = false
+                    if (_feedItems.value.isNullOrEmpty()) {
+                        _error.value = err.message ?: "Failed to load feed"
+                    }
                 }
+            _isLoading.value = false
         }
     }
 
@@ -127,7 +147,7 @@ class SharedViewModel(private val app: StreamHubApp) : AndroidViewModel(app) {
         loadFeed(category)
     }
 
-    fun refreshFeed() = loadFeed(_activeCategory.value ?: Category.ALL)
+    fun refreshFeed() = loadFeed(_activeCategory.value ?: Category.ALL, forceRefresh = true)
 
     fun search(query: String) {
         Analytics.searchPerformed(query)

@@ -82,6 +82,7 @@ class FeedAdapter(
         }
     }
 
+
     // ── Section Header ViewHolder ─────────────────────────────────────────────
 
     inner class HeaderViewHolder(
@@ -148,7 +149,7 @@ class FeedAdapter(
             when (state) {
                 is SummaryState.Idle -> {
                     binding.layoutSummaryContent.visibility = View.GONE
-                    binding.btnTldr.text = "✨ TL;DR"
+                    binding.btnTldr.text = "✨ AI Summary"
                     binding.btnTldr.isEnabled = true
                 }
                 is SummaryState.Loading -> {
@@ -166,7 +167,7 @@ class FeedAdapter(
                     binding.tvSummary.setTextColor(
                         ContextCompat.getColor(ctx, R.color.text_secondary)
                     )
-                    binding.btnTldr.text = "✨ TL;DR"
+                    binding.btnTldr.text = "✨ AI Summary"
                     binding.btnTldr.isEnabled = true
                 }
                 is SummaryState.Error -> {

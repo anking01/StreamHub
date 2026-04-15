@@ -19,6 +19,14 @@
         <item name="bottomNavigationStyle">@style/Widget.StreamHub.BottomNav</item>
     </style>
 
+    <!-- Splash Activity theme — matches background instantly, no white flash -->
+    <style name="Theme.StreamHub.Splash" parent="Theme.StreamHub">
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
     <!-- Stream Activity theme — dark status bar for video viewing -->
     <style name="Theme.StreamHub.Stream" parent="Theme.StreamHub">
         <item name="android:statusBarColor">@color/surface</item>

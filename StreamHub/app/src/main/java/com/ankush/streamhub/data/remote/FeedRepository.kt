@@ -46,24 +46,22 @@ class FeedRepository(
 
             _youtubeError.value = null
             val results = activeFeeds
-                .chunked(5)
-                .flatMap { batch ->
-                    batch.map { config ->
-                        async {
-                            if (config.source == FeedSource.YOUTUBE) {
-                                try {
-                                    youtube.fetch(config)
-                                } catch (e: Exception) {
-                                    Log.e(TAG, "YouTube fetch failed: ${e.message}")
-                                    _youtubeError.value = e.message
-                                    emptyList()
-                                }
-                            } else {
-                                parser.parse(config)
+                .map { config ->
+                    async {
+                        if (config.source == FeedSource.YOUTUBE) {
+                            try {
+                                youtube.fetch(config)
+                            } catch (e: Exception) {
+                                Log.e(TAG, "YouTube fetch failed: ${e.message}")
+                                _youtubeError.value = e.message
+                                emptyList()
                             }
+                        } else {
+                            parser.parse(config)
                         }
-                    }.awaitAll()
+                    }
                 }
+                .awaitAll()
                 .flatten()
                 .distinctBy { it.sourceUrl }
                 .sortedByDescending { it.publishedAt }
@@ -94,6 +92,13 @@ class FeedRepository(
                 Result.failure(e)
             }
         }
+    }
+
+    suspend fun getCachedItems(category: Category = Category.ALL): List<ContentItem> = withContext(Dispatchers.IO) {
+        val cached = if (category == Category.ALL) cachedFeedDao.getAll()
+                     else cachedFeedDao.getByCategory(category.name)
+        val bookmarkedIds = bookmarkDao.getAllBookmarkIds().first().toSet()
+        cached.map { it.toDomain().copy(isBookmarked = it.id in bookmarkedIds) }
     }
 
     // Used by FeedSyncWorker for background-only fetch + cache (no UI state update)

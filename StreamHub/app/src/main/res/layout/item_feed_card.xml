@@ -135,13 +135,13 @@
                 android:layout_marginBottom="10dp"
                 android:visibility="gone" />
 
-            <!-- TL;DR Button -->
+            <!-- AI Summary Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_tldr"
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✨ TL;DR"
+                android:text="✨ AI Summary"
                 android:textSize="12sp"
                 android:minWidth="0dp"
                 android:paddingStart="0dp"
